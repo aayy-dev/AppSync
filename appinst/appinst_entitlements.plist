@@ -8,6 +8,7 @@
 	<array>
 		<string>Install</string>
 		<string>InstallForLaunchServices</string>
+		<string>InstallForInstallCoordination</string>
 	</array>
 	<key>com.apple.security.exception.mach-lookup.global-name</key>
 	<array>

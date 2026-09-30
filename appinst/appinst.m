@@ -13,6 +13,7 @@
 #define kAppType @"User"
 #define kAppTypeKey @"ApplicationType"
 #define kRandomLength 32
+#define kUnimplementedErrorCode -4 // unimpErr
 
 #define DPKG_PATH ROOT_PATH("/var/lib/dpkg/info/ai.akemi.appinst.list")
 
@@ -59,6 +60,57 @@ void mobileInstallationStatusCallback(CFDictionaryRef information) {
 - (BOOL)installApplication:(NSURL *)path withOptions:(NSDictionary *)options error:(NSError **)error;
 - (BOOL)uninstallApplication:(NSString *)identifier withOptions:(NSDictionary *)options;
 @end
+
+// MIInstallerClient for iOS 26 and above, where LSApplicationWorkspace's install method is a stub that always fails with unimpErr
+@interface MIInstallOptions : NSObject
+- (instancetype)initWithLegacyOptionsDictionary:(NSDictionary *)options;
+@end
+
+@interface MIAppIdentity : NSObject
+- (instancetype)initWithBundleIdentifier:(NSString *)bundleIdentifier personaUniqueString:(NSString *)personaUniqueString location:(id)location;
+@end
+
+@interface MIInstallerClient : NSObject
++ (instancetype)installerWithProgressBlock:(void (^)(NSDictionary *progress))progressBlock;
+- (void)installURL:(NSURL *)url identity:(id)identity targetingDomain:(NSUInteger)domain withOptions:(MIInstallOptions *)options returningResultInfo:(BOOL)returnResultInfo completion:(void (^)(BOOL success, NSDictionary *resultInfo, id recordPromise, NSError *error))completion;
+@end
+
+// The installation domain that LaunchServices passed to MobileInstallation before iOS 26
+#define kMIInstallationDomainDefault 1
+#define ICL_PATH "/System/Library/PrivateFrameworks/InstalledContentLibrary.framework/InstalledContentLibrary"
+
+BOOL installWithMIInstallerClient(NSURL *url, NSDictionary *legacyOptions, NSError **error) {
+	if (dlopen(MI_PATH, RTLD_LAZY) == NULL || dlopen(ICL_PATH, RTLD_LAZY) == NULL) {
+		printf("Failed to retrieve MobileInstallation.\n");
+		return NO;
+	}
+	Class MIInstallerClient_class = objc_getClass("MIInstallerClient");
+	Class MIInstallOptions_class = objc_getClass("MIInstallOptions");
+	Class MIAppIdentity_class = objc_getClass("MIAppIdentity");
+	Class MILocationSystemDefinedCommon_class = objc_getClass("MILocationSystemDefinedCommon");
+	if (MIInstallerClient_class == nil || MIInstallOptions_class == nil || MIAppIdentity_class == nil || MILocationSystemDefinedCommon_class == nil) {
+		printf("Failed to get class: MIInstallerClient\n");
+		return NO;
+	}
+	// The legacy options dictionary carries CFBundleIdentifier, which installd requires.
+	MIInstallOptions *options = [[MIInstallOptions_class alloc] initWithLegacyOptionsDictionary:legacyOptions];
+	// installd rejects the identity it derives from the bundle ID alone with "Unknown location type", so name the standard app location.
+	MIAppIdentity *identity = [[MIAppIdentity_class alloc] initWithBundleIdentifier:legacyOptions[kIdentifierKey] personaUniqueString:nil location:[MILocationSystemDefinedCommon_class new]];
+	MIInstallerClient *client = [MIInstallerClient_class installerWithProgressBlock:^(NSDictionary *progress) {
+		mobileInstallationStatusCallback((__bridge CFDictionaryRef) progress);
+	}];
+	__block BOOL isInstalled = NO;
+	__block NSError *installError = nil;
+	// installd replies through a synchronous XPC proxy, so the completion runs before this call returns.
+	[client installURL:url identity:identity targetingDomain:kMIInstallationDomainDefault withOptions:options returningResultInfo:NO completion:^(BOOL success, NSDictionary *resultInfo, id recordPromise, NSError *installdError) {
+		isInstalled = success;
+		installError = installdError;
+	}];
+	if (error) {
+		*error = installError;
+	}
+	return isInstalled;
+}
 
 bool doesProcessAtPIDExist(pid_t pid) {
 	// kill() returns 0 when the process exists, and -1 if the process does not.
@@ -283,6 +335,11 @@ int main(int argc, const char *argv[]) {
 			} @catch (NSException *exception) {
 				printf("An exception occurred while attempting to install the app!\n");
 				printf("NSException info: %s\n", [[NSString stringWithFormat:@"%@", exception] UTF8String]);
+			}
+			if (!isInstalled && [error.domain isEqualToString:NSOSStatusErrorDomain] && error.code == kUnimplementedErrorCode) {
+				// iOS 26 removed LSApplicationWorkspace's install implementation, so ask installd directly
+				error = nil;
+				isInstalled = installWithMIInstallerClient([NSURL fileURLWithPath:installPath], options, &error);
 			}
 			if (error) {
 				printf("An error occurred while attempting to install the app!\n");
