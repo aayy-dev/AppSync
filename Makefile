@@ -1,5 +1,10 @@
+ifeq ($(THEOS_PACKAGE_SCHEME),rootless)
+export TARGET = iphone:clang:latest:15.0
+export ARCHS = arm64 arm64e
+else
 export TARGET = iphone:clang:latest:5.0
 export ARCHS = armv7 armv7s arm64 arm64e
+endif
 export DEBUG = 0
 
 THEOS_PACKAGE_DIR_NAME = debs
@@ -9,8 +14,6 @@ include $(THEOS)/makefiles/common.mk
 
 SUBPROJECTS += AppSyncUnified-installd
 SUBPROJECTS += AppSyncUnified-FrontBoard
-SUBPROJECTS += pkg-actions
-SUBPROJECTS += asu_inject
 
 include $(THEOS_MAKE_PATH)/aggregate.mk
 

@@ -1,0 +1,5 @@
+#!/bin/sh
+# Activate AppSync immediately: reload installd (installd-side MIS hook) and respawn SpringBoard (FrontBoard trust hook).
+launchctl kickstart -k system/com.apple.mobile.installd >/dev/null 2>&1 || true
+killall SpringBoard >/dev/null 2>&1 || true
+exit 0

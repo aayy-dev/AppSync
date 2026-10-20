@@ -1,14 +1,13 @@
-Conflicts: us.hackulo.appsync50, us.hackulo.appsync50plus, com.hackyouriphone.appsync7, com.teiron.ppsync, appsync50plus2.25pp, com.linusyang.appsync, com.sull.appsyncunified, com.sull.appsyncunifiedbeta, com.xsellize.appsync50, com.xsellize.appsync50plus, appsync50plus.178, appsync50plus2.178, cydia.net.angelxwind.appsyncunified, com.ifucker.appsync, com.sexyphonetech.appsyncunified, appsyncunifiedofficial, org.digbick.asufixed, cn.mingmei.asu623517234615234813, technology.goated.appsync, technology.goated.appsyncunified, vaginalfisting.appsynctool, science.xnu.substitute, akemi.appsink, akemi.appsyncunifed, akemi.appsyncunifed2, akemi.appsyncunifedpatched, appsyncpatched, appsyncrootless, weaponized.autism.technology.appsyncunified, ellekit (<< 1.1)
-Depends: firmware (>= 5.0), mobilesubstrate (>= 0.9.5100), firmware (<< 27.0)
-Depiction: https://cydia.akemi.ai/?page/ai.akemi.appsyncunified
-Maintainer: Karen/あけみ <karen@akemi.ai>
-Homepage: https://cydia.akemi.ai/
-Provides: appsync, net.angelxwind.appsyncunified
-Replaces: us.hackulo.appsync50, net.angelxwind.appsyncunified
-Package: ai.akemi.appsyncunified
-Name: AppSync Unified
-Version: 116.0+crowbar1
-Architecture: iphoneos-arm
-Description: Enables the ability to install unsigned/fakesigned iOS applications.
+Package: dev.aayy.appsyncunified
+Name: AppSync Unified (iOS 26)
+Version: 116.0+crowbar1.aayy1
+Architecture: iphoneos-arm64
+Description: Enables the ability to install unsigned/fakesigned iOS applications. iOS 26 fork of akemin-dayo/AppSync (installd + FrontBoard hooks unchanged).
 Section: Tweaks
-Author: Karen/あけみ, Linus Yang <karen@akemi.ai>
+Author: Karen/あけみ, Linus Yang, Anson (crowbar), aayy-dev
+Maintainer: aayy-dev
+Homepage: https://github.com/aayy-dev/AppSync
+Depends: firmware (>= 5.0), mobilesubstrate (>= 0.9.5100), firmware (<< 27.0)
+Provides: appsync, net.angelxwind.appsyncunified, ai.akemi.appsyncunified
+Conflicts: us.hackulo.appsync50, us.hackulo.appsync50plus, com.hackyouriphone.appsync7, com.teiron.ppsync, appsync50plus2.25pp, com.linusyang.appsync, com.sull.appsyncunified, com.sull.appsyncunifiedbeta, com.xsellize.appsync50, com.xsellize.appsync50plus, appsync50plus.178, appsync50plus2.178, cydia.net.angelxwind.appsyncunified, com.ifucker.appsync, com.sexyphonetech.appsyncunified, appsyncunifiedofficial, org.digbick.asufixed, cn.mingmei.asu623517234615234813, technology.goated.appsync, technology.goated.appsyncunified, vaginalfisting.appsynctool, science.xnu.substitute, akemi.appsink, akemi.appsyncunifed, akemi.appsyncunifed2, akemi.appsyncunifedpatched, appsyncpatched, appsyncrootless, weaponized.autism.technology.appsyncunified, ai.akemi.appsyncunified, xyz.cypwn.appsyncunified, ellekit (<< 1.1)
+Replaces: us.hackulo.appsync50, net.angelxwind.appsyncunified, ai.akemi.appsyncunified, xyz.cypwn.appsyncunified

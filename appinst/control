@@ -1,17 +1,16 @@
-Package: ai.akemi.appinst
-Name: appinst (App Installer)
+Package: dev.aayy.appinst
+Name: appinst (App Installer, iOS 26)
 Priority: standard
 Pre-Depends: firmware (>= 5.0)
-Depends: ai.akemi.appsyncunified (>= 5.1)
-Version: 2.1.1+crowbar1
-Architecture: iphoneos-arm
-Description: A command-line IPA app installer.
-Maintainer: Karen/あけみ <karen@akemi.ai>
-Author: Karen/あけみ, Linus Yang <karen@akemi.ai>
+Depends: dev.aayy.appsyncunified (>= 5.1)
+Version: 2.1.1+crowbar1.aayy1
+Architecture: iphoneos-arm64
+Description: A command-line IPA app installer. iOS 26 fork: falls back to MobileInstallation's MIInstallerClient when LaunchServices installApplication returns unimpErr.
+Maintainer: aayy-dev
+Author: Karen/あけみ, Linus Yang, Anson (crowbar), aayy-dev
 Section: Utilities
-Homepage: https://github.com/akemin-dayo/AppSync
+Homepage: https://github.com/aayy-dev/AppSync
 Tag: role::enduser, purpose::console
-Conflicts: com.sull.appinstaller
-Provides: com.linusyang.appinst
-Replaces: com.linusyang.appinst
-Depiction: https://cydia.akemi.ai/?page/ai.akemi.appinst
+Provides: com.linusyang.appinst, ai.akemi.appinst
+Conflicts: com.sull.appinstaller, com.linusyang.appinst, ai.akemi.appinst, xyz.cypwn.appinst
+Replaces: com.linusyang.appinst, ai.akemi.appinst, xyz.cypwn.appinst
