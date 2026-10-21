@@ -15,7 +15,6 @@
 #define kRandomLength 32
 #define kUnimplementedErrorCode -4 // unimpErr
 
-#define DPKG_PATH ROOT_PATH("/var/lib/dpkg/info/ai.akemi.appinst.list")
 
 static const NSString *kRandomAlphanumeric = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
@@ -155,10 +154,6 @@ int main(int argc, const char *argv[]) {
 		printf("appinst (App Installer)\n");
 		printf("Copyright (C) 2014-2024 Karen/あけみ\n");
 		printf("** PLEASE DO NOT USE APPINST FOR PIRACY **\n");
-		if (access(DPKG_PATH, F_OK) == -1) {
-			printf("You seem to have installed appinst from an APT repository that is not cydia.akemi.ai.\n");
-			printf("Please make sure that you download AppSync Unified from the official repository to ensure proper operation.\n");
-		}
 
 		// Construct our temporary directory path
 		NSFileManager *fileManager = [NSFileManager defaultManager];

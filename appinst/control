@@ -3,7 +3,7 @@ Name: appinst (App Installer, iOS 26)
 Priority: standard
 Pre-Depends: firmware (>= 5.0)
 Depends: dev.aayy.appsyncunified (>= 5.1)
-Version: 2.1.1+crowbar1.aayy1
+Version: 2.1.1
 Architecture: iphoneos-arm64
 Description: A command-line IPA app installer. iOS 26 fork: falls back to MobileInstallation's MIInstallerClient when LaunchServices installApplication returns unimpErr.
 Maintainer: aayy-dev

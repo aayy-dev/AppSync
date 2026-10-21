@@ -15,7 +15,7 @@ Some popular use cases include:
 
 ## How do I install AppSync Unified on my jailbroken iOS device?
 
-AppSync Unified is available from **Karen/あけみ's Repo: https://cydia.akemi.ai/** ([Tap here on your device to automatically add the repo!](https://cydia.akemi.ai/add.php))
+AppSync Unified (iOS 26 fork) is available from **the aayy-dev repo: https://dev.rtrdd.fyi/** — add it in Sileo or Zebra.
 
 If you do not see AppSync Unified listed in Karen/あけみ's Repo, then that just means you have another repository added that is also hosting a copy of AppSync Unified under the same package ID.
 
@@ -60,7 +60,7 @@ First, make sure you have [Theos](https://github.com/theos/theos) installed. If 
 Once you've confirmed that you have Theos installed, open up Terminal and run the following commands:
 
 ```shell
-git clone https://github.com/akemin-dayo/AppSync.git
+git clone https://github.com/aayy-dev/AppSync.git
 cd AppSync/
 make
 make package

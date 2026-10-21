@@ -13,7 +13,6 @@
 	#define LOG(...)
 #endif
 
-#define DPKG_PATH ROOT_PATH("/var/lib/dpkg/info/ai.akemi.appsyncunified.list")
 
 #define L_LAUNCHDAEMON_PATH "/Library/LaunchDaemons"
 #define SL_LAUNCHDAEMON_PATH "/System" L_LAUNCHDAEMON_PATH
@@ -61,10 +60,6 @@ int main(int argc, const char **argv) {
 		printf("AppSync Unified\n");
 		printf("Copyright (C) 2014-2024 Karen/あけみ\n");
 		printf("** PLEASE DO NOT USE APPSYNC UNIFIED FOR PIRACY **\n");
-		if (access(DPKG_PATH, F_OK) == -1) {
-			printf("You seem to have installed AppSync Unified from an APT repository that is not cydia.akemi.ai.\n");
-			printf("Please make sure that you download AppSync Unified from the official repository to ensure proper operation.\n");
-		}
 		if (geteuid() != 0) {
 			printf("FATAL: This binary must be run as root. (… Actually, how are you even using dpkg without being root?)\n");
 			return 1;
